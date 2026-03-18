@@ -1,0 +1,43 @@
+<x-app-layout>
+    <x-slot name="header"><h2 class="font-semibold text-xl text-gray-800">Editar Produto</h2></x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white p-6 shadow-sm sm:rounded-lg">
+                <form action="{{ route('produtos.update', $produto->id) }}" method="POST" class="space-y-4">
+                    @csrf
+                    @method('PUT')
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Nome</label>
+                        <input type="text" name="nome" value="{{ old('nome', $produto->nome) }}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
+                        @error('nome') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Descrição</label>
+                        <input type="text" name="descricao" value="{{ old('descricao', $produto->descricao) }}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
+                        @error('descricao') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Preço</label>
+                            <input type="number" step="0.01" name="preco" value="{{ old('preco', $produto->preco) }}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
+                            @error('preco') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Quantidade em Estoque</label>
+                            <input type="number" name="quantidade_estoque" value="{{ old('quantidade_estoque', $produto->quantidade_estoque) }}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
+                            @error('quantidade_estoque') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-end mt-4">
+                        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md uppercase text-xs font-bold">Atualizar Produto</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</x-app-layout>

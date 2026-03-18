@@ -1,0 +1,18 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Produtos extends Model
+{
+    use \Illuminate\Database\Eloquent\Factories\HasFactory;
+
+    protected $fillable = ['nome', 'descricao', 'preco', 'quantidade_estoque'];
+
+    protected $casts = [
+        'preco' => 'decimal:2',
+        'quantidade_estoque' => 'integer',
+    ];
+
+}
