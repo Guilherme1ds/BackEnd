@@ -18,6 +18,8 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Filament\Actions\ViewAction;
+use Filament\Actions\EditAction;
 
 class ProdutoResource extends Resource
 {
@@ -53,6 +55,10 @@ class ProdutoResource extends Resource
             TextColumn::make('referencia')->searchable(),
             TextColumn::make('preco_venda'),
             TextColumn::make('estoque'),
+        ])
+        ->recordActions([
+            ViewAction::make()->label('Visualizar'),
+            EditAction::make()->label('Editar'),
         ]);
     }
 

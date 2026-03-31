@@ -18,6 +18,8 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Filament\Actions\ViewAction;
+use Filament\Actions\EditAction;
 
 class ClienteResource extends Resource
 {
@@ -49,13 +51,16 @@ class ClienteResource extends Resource
 
     public static function table(Table $table): Table
     {
-        // return ClientesTable::configure($table);
         return $table
         ->columns([
             TextColumn::make('nome')->searchable(),
             TextColumn::make('email')->searchable(),
             TextColumn::make('telefone'),
             TextColumn::make('documento'),
+        ])
+        ->recordActions([
+            ViewAction::make()->label('Visualizar'),
+            EditAction::make()->label('Editar'),
         ]);
     }
 

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('produto_id')->nullable()->constrained('produtos')->cascadeOnDelete();
             $table->foreignId('insumo_id')->nullable()->constrained('insumos')->cascadeOnDelete();
             $table->decimal('quantidade', 10, 2)->default(0);
+            $table->enum('tipo', ['entrada', 'saída'])->default('entrada');
             $table->timestamps();
         });
     }

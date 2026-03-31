@@ -19,6 +19,8 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Filament\Actions\ViewAction;
+use Filament\Actions\EditAction;
 
 class InsumoResource extends Resource
 {
@@ -59,6 +61,10 @@ class InsumoResource extends Resource
             TextColumn::make('unidade_medida'),
             TextColumn::make('preco_custo'),
             TextColumn::make('estoque'),
+        ])
+        ->recordActions([
+            ViewAction::make()->label('Visualizar'),
+            EditAction::make()->label('Editar'),
         ]);
     }
 

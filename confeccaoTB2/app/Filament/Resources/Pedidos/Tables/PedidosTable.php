@@ -15,8 +15,9 @@ class PedidosTable
     {
         return $table
             ->columns([
-                TextColumn::make('cliente_id')
-                    ->numeric()
+                TextColumn::make('cliente.nome')
+                    ->label('Cliente')
+                    ->searchable()
                     ->sortable(),
                 TextColumn::make('status')
                     ->searchable(),
@@ -36,12 +37,12 @@ class PedidosTable
                 //
             ])
             ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
+                ViewAction::make()->label('Visualizar'),
+                EditAction::make()->label('Editar'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    DeleteBulkAction::make()->label('Deletar selecionados'),
                 ]),
             ]);
     }
