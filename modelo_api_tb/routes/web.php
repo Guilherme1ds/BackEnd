@@ -1,8 +1,12 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+route::get('/usuarios', [UserController::class, 'index']);
 
 // Exemplo 1: GET
 Route::get('user/{username}', function ($username) {
@@ -32,11 +36,25 @@ Route::post('user/novo', function(Request $request) {
         'idade' => 'required|integer'
     ]);
 
+    try {
+        $idGerado = DB::table('usuarios')->insertGetId([
+            'nome' => $dados['nome'],
+            'genero' => $dados['genero'],
+            'idade' => $dados['idade'],
+        ]);
+
     return response()->json([
         'mensagem' => 'Usuario cadastrado com sucesso!',
-        'id_gerado' => rand(1000,9999),
+        'id_gerado' => $idGerado,
         'dados_recebidos' => $dados
     ], 201);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'erro' => 'Falha ao salvar no banco de dados',
+            'detalhe' => $e->getMessage()
+        ], 500);
+    }
 });
 
 Route::get('/', function () {

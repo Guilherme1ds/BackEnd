@@ -1,8 +1,12 @@
 <?php
 
+use App\Http\Controllers\PokemonController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
+
+
+route::get('/pokedex', [PokemonController::class, 'index']);
 
 // Exemplo 1: GET
 Route::get('pokemon/{nome}', function ($nome) {
