@@ -10,6 +10,7 @@ use App\Filament\Resources\Fornecedors\Schemas\FornecedorForm;
 use App\Filament\Resources\Fornecedors\Schemas\FornecedorInfolist;
 use App\Models\Fornecedor;
 use BackedEnum;
+use UnitEnum;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Support\RawJs;
@@ -26,14 +27,14 @@ class FornecedorResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
-    // Nome que vai aparecer no menu lateral
     protected static ?string $navigationLabel = 'Fornecedores';
 
-    // Nome singular (ex: usado no botão "Criar Usuário")
-    protected static ?string $modelLabel = 'Fornecedor';
+    protected static ?string $modelLabel = 'Criar Fornecedor';
 
-    // Nome plural (ex: usado no título da tabela "Usuários)
     protected static ?string $pluralModelLabel = 'Fornecedores';
+
+    protected static string|UnitEnum|null $navigationGroup = 'Cadastros Gerais';
+    protected static ?int $navigationSort = 2;
 
     protected static ?string $recordTitleAttribute = 'Fornecedor';
 

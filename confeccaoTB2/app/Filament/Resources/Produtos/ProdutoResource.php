@@ -11,6 +11,7 @@ use App\Filament\Resources\Produtos\Schemas\ProdutoInfolist;
 use App\Filament\Resources\Produtos\Tables\ProdutosTable;
 use App\Models\Produto;
 use BackedEnum;
+use UnitEnum;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Support\RawJs;
@@ -26,6 +27,15 @@ class ProdutoResource extends Resource
     protected static ?string $model = Produto::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+
+    protected static ?string $navigationLabel = 'Produtos';
+
+    protected static ?string $modelLabel = 'Criar Produto';
+
+    protected static ?string $pluralModelLabel = 'Produtos';
+
+    protected static string|UnitEnum|null $navigationGroup = 'Vendas';
+    protected static ?int $navigationSort = 2;
 
     protected static ?string $recordTitleAttribute = 'Produto';
 

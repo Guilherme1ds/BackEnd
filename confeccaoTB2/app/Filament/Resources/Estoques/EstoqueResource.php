@@ -10,6 +10,7 @@ use App\Filament\Resources\Estoques\Schemas\EstoqueInfolist;
 use App\Models\Estoque;
 use App\Models\Produto;
 use BackedEnum;
+use UnitEnum;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
@@ -25,6 +26,15 @@ class EstoqueResource extends Resource
     protected static ?string $model = Estoque::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+
+    protected static ?string $navigationLabel = 'Estoques';
+
+    protected static ?string $modelLabel = 'Criar Estoque';
+
+    protected static ?string $pluralModelLabel = 'Estoques';
+
+    protected static string|UnitEnum|null $navigationGroup = 'Estoque';
+    protected static ?int $navigationSort = 1;
 
     protected static ?string $recordTitleAttribute = 'Estoque';
 
