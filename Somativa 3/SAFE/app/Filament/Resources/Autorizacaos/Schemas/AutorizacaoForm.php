@@ -28,6 +28,9 @@ class AutorizacaoForm
                             ->searchable()
                             ->preload()
                             ->required()
+                            ->validationMessages([
+                                'required' => 'O aluno é obrigatório',
+                            ])
                             ->columnSpanFull(),
                         
                         Select::make('turma_id')
@@ -36,6 +39,9 @@ class AutorizacaoForm
                             ->searchable()
                             ->preload()
                             ->required()
+                            ->validationMessages([
+                                'required' => 'A turma é obrigatória',
+                            ])
                             ->columnSpanFull(),
                     ]),
 
@@ -49,11 +55,18 @@ class AutorizacaoForm
                                 'sair' => 'Saída (Autorizo o Aluno a Sair)',
                             ])
                             ->required()
+                            ->validationMessages([
+                                'required' => 'O tipo de autorização é obrigatório',
+                            ])
                             ->columnSpanFull(),
 
                         TimePicker::make('horario')
                             ->label('Horário')
                             ->seconds(false)
+                            ->required()
+                            ->validationMessages([
+                                'required' => 'O horário é obrigatório',
+                            ])
                             ->columnSpan(1),
 
                         Toggle::make('conta_falta')
@@ -74,14 +87,7 @@ class AutorizacaoForm
                                 '4ª' => '4ª Aula',
                                 '5ª' => '5ª Aula',
                             ])
-                            ->columnSpanFull()
-                            ->descriptions([
-                                '1ª' => '08:00 - 09:00',
-                                '2ª' => '09:00 - 10:00',
-                                '3ª' => '10:15 - 11:15',
-                                '4ª' => '11:15 - 12:15',
-                                '5ª' => '12:15 - 13:15',
-                            ]),
+                            ->columnSpanFull(),
                     ]),
 
                 // Seção: Status e Aprovações
@@ -90,13 +96,17 @@ class AutorizacaoForm
                         Select::make('status')
                             ->label('Status')
                             ->options([
-                                'pendente' => 'Pendente',
+                                'pendente' => 'Pendente - Aguardando aprovação',
                                 'autorizado_professor' => 'Autorizado pelo Professor',
                                 'concluido_portaria' => 'Concluído pela Portaria',
                                 'recusado' => 'Recusado',
                             ])
                             ->default('pendente')
                             ->required()
+                            ->helperText('Fluxo: Pendente → Professor → Portaria → Concluído')
+                            ->validationMessages([
+                                'required' => 'O status é obrigatório',
+                            ])
                             ->columnSpanFull(),
 
                         Select::make('aprovado_por_id')
@@ -104,6 +114,7 @@ class AutorizacaoForm
                             ->relationship('aprovadoPor', 'name')
                             ->searchable()
                             ->preload()
+                            ->helperText('Selecione o professor que autorizou')
                             ->columnSpan(1),
 
                         Select::make('validado_por_id')
@@ -111,6 +122,7 @@ class AutorizacaoForm
                             ->relationship('validadoPor', 'name')
                             ->searchable()
                             ->preload()
+                            ->helperText('Selecione o responsável pela portaria')
                             ->columnSpan(1),
                     ])->columns(2),
 
@@ -119,8 +131,10 @@ class AutorizacaoForm
                     ->schema([
                         Textarea::make('observacao')
                             ->label('Observações Adicionais')
-                            ->placeholder('Ex: Motivo da autorização, detalhes importantes, etc.')
+                            ->placeholder('Ex: Motivo da autorização, detalhes importantes, condições especiais, etc.')
                             ->rows(4)
+                            ->maxLength(1000)
+                            ->helperText('Máximo 1000 caracteres')
                             ->columnSpanFull(),
                     ]),
             ]);

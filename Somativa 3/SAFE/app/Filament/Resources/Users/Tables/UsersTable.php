@@ -1,31 +1,31 @@
 <?php
 
-namespace App\Filament\Resources\Turmas\Tables;
+namespace App\Filament\Resources\Users\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class TurmasTable
+class UsersTable
 {
     public static function configure(Table $table): Table
     {
         return $table
             ->columns([
-                TextColumn::make('nome')
+                TextColumn::make('name')
                     ->label('Nome')
-                    ->searchable()
-                    ->sortable()
-                    ->icon('heroicon-o-academic-cap')
-                    ->badge()
-                    ->color('primary'),
-
+                    ->searchable(),
+                TextColumn::make('email')
+                    ->label('Email')
+                    ->searchable(),
+                TextColumn::make('roles.name')
+                    ->label('Cargo')
+                    ->badge(),
                 TextColumn::make('created_at')
-                    ->label('Cadastrado em')
-                    ->dateTime('d/m/Y H:i')
+                    ->label('Criado em')
+                    ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
@@ -33,7 +33,6 @@ class TurmasTable
                 //
             ])
             ->recordActions([
-                ViewAction::make(),
                 EditAction::make(),
             ])
             ->toolbarActions([

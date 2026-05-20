@@ -7,6 +7,7 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class AlunosTable
@@ -16,25 +17,40 @@ class AlunosTable
         return $table
             ->columns([
                 TextColumn::make('nome')
-                    ->searchable(),
-                TextColumn::make('turma_id')
-                    ->numeric()
+                    ->label('Nome')
+                    ->searchable()
+                    ->icon('heroicon-o-user')
                     ->sortable(),
+
+                TextColumn::make('turma.nome')
+                    ->label('Turma')
+                    ->badge()
+                    ->color('primary')
+                    ->searchable()
+                    ->sortable(),
+
                 TextColumn::make('nome_responsavel')
-                    ->searchable(),
+                    ->label('Responsável')
+                    ->searchable()
+                    ->icon('heroicon-o-user-group')
+                    ->sortable(),
+
                 TextColumn::make('telefone_responsavel')
+                    ->label('Telefone')
+                    ->icon('heroicon-o-phone')
                     ->searchable(),
+
                 TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->label('Cadastrado em')
+                    ->dateTime('d/m/Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make('turma')
+                    ->label('Filtrar por Turma')
+                    ->relationship('turma', 'nome')
+                    ->placeholder('Todas as turmas'),
             ])
             ->recordActions([
                 ViewAction::make(),

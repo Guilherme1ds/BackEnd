@@ -5,7 +5,9 @@ namespace App\Filament\Resources\Autorizacaos;
 use App\Filament\Resources\Autorizacaos\Pages\CreateAutorizacao;
 use App\Filament\Resources\Autorizacaos\Pages\EditAutorizacao;
 use App\Filament\Resources\Autorizacaos\Pages\ListAutorizacaos;
+use App\Filament\Resources\Autorizacaos\Pages\ViewAutorizacao;
 use App\Filament\Resources\Autorizacaos\Schemas\AutorizacaoForm;
+use App\Filament\Resources\Autorizacaos\Schemas\AutorizacaoInfolist;
 use App\Filament\Resources\Autorizacaos\Tables\AutorizacaosTable;
 use App\Models\Autorizacao;
 use BackedEnum;
@@ -27,6 +29,11 @@ class AutorizacaoResource extends Resource
         return AutorizacaoForm::configure($schema);
     }
 
+    public static function infolist(Schema $schema): Schema
+    {
+        return AutorizacaoInfolist::configure($schema);
+    }
+
     public static function table(Table $table): Table
     {
         return AutorizacaosTable::configure($table);
@@ -44,6 +51,7 @@ class AutorizacaoResource extends Resource
         return [
             'index' => ListAutorizacaos::route('/'),
             'create' => CreateAutorizacao::route('/create'),
+            'view' => ViewAutorizacao::route('/{record}'),
             'edit' => EditAutorizacao::route('/{record}/edit'),
         ];
     }

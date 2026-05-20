@@ -6,9 +6,16 @@ use App\Filament\Resources\Autorizacaos\AutorizacaoResource;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
 
+
 class CreateAutorizacao extends CreateRecord
 {
     protected static string $resource = AutorizacaoResource::class;
+
+    public function mount(): void
+    {
+        abort_if(Auth::user()->hasRole('portaria'), 403);
+        parent::mount();
+    }
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {

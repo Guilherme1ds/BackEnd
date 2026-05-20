@@ -15,10 +15,21 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Auth;
 
 class TurmaResource extends Resource
 {
     protected static ?string $model = Turma::class;
+
+    /**
+     * @phpstan-ignore-next-line
+     */
+    public static function canAccess(): bool
+    {
+        /** @var \App\Models\User|null $user */
+        $user = Auth::user();
+        return $user === null || !$user->hasRole('portaria');
+    }
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 

@@ -19,6 +19,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Configurações do Filament podem ser feitas no PanelProvider
+        // Este arquivo fica vazio propositalmente
     }
 }

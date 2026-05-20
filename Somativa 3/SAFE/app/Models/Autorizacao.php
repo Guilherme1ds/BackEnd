@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Events\AutorizacaoCreated;
+use App\Events\AutorizacaoUpdated;
 use Illuminate\Database\Eloquent\Model;
 
 class Autorizacao extends Model
@@ -18,6 +20,11 @@ class Autorizacao extends Model
         'aulas_afetadas' => 'array',         
         'horario' => 'datetime',        
         'conta_falta' => 'boolean',         
+    ];
+
+    protected $dispatchesEvents = [
+        'created' => AutorizacaoCreated::class,
+        'updated' => AutorizacaoUpdated::class,
     ];
 
     public function aluno()

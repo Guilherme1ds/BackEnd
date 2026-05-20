@@ -2,11 +2,13 @@
     <div style="margin-bottom: 30px;">
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
             <!-- Card Pendentes -->
+            @if(!($isPortaria ?? false))
             <div style="background: #fef3c7; border: 1px solid #fcd34d; border-radius: 8px; padding: 20px; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
                 <p style="font-size: 12px; font-weight: 600; color: #92400e; margin: 0;">Pendentes</p>
                 <p style="font-size: 28px; font-weight: bold; color: #b45309; margin: 15px 0 0;">{{ $autorizacoesPendentes ?? 0 }}</p>
                 <p style="font-size: 12px; color: #b45309; margin: 10px 0 0;">⏳ Aguardando análise</p>
             </div>
+            @endif
 
             <!-- Card Autorizadas -->
             <div style="background: #dcfce7; border: 1px solid #bbf7d0; border-radius: 8px; padding: 20px; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
@@ -14,6 +16,15 @@
                 <p style="font-size: 28px; font-weight: bold; color: #16a34a; margin: 15px 0 0;">{{ $autorizacoesAutorizadas ?? 0 }}</p>
                 <p style="font-size: 12px; color: #16a34a; margin: 10px 0 0;">✓ Aprovadas</p>
             </div>
+
+            <!-- Card Recusadas -->
+            @if(!($isPortaria ?? false))
+            <div style="background: #fee2e2; border: 1px solid #fecaca; border-radius: 8px; padding: 20px; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+                <p style="font-size: 12px; font-weight: 600; color: #991b1b; margin: 0;">Recusadas</p>
+                <p style="font-size: 28px; font-weight: bold; color: #dc2626; margin: 15px 0 0;">{{ $autorizacoesRecusadas ?? 0 }}</p>
+                <p style="font-size: 12px; color: #dc2626; margin: 10px 0 0;">✗ Rejeitadas</p>
+            </div>
+            @endif
         </div>
     </div>
 
@@ -21,7 +32,9 @@
     <div style="background: white; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
         <div style="border-bottom: 1px solid #e5e7eb; padding: 20px; display: flex; justify-content: space-between; align-items: center;">
             <h3 style="font-size: 16px; font-weight: 600; color: #1f2937; margin: 0;">Autorizações Recentes</h3>
+            @if(!($isPortaria ?? false))
             <a href="{{ route('filament.admin.resources.autorizacaos.index') }}" style="font-size: 13px; color: #2563eb; text-decoration: none;">Ver todas →</a>
+            @endif
         </div>
         <div style="overflow-x: auto;">
             <table style="width: 100%; border-collapse: collapse;">
@@ -33,7 +46,9 @@
                         <th style="padding: 12px 15px; text-align: left; font-size: 12px; font-weight: 600; color: #374151;">Horário</th>
                         <th style="padding: 12px 15px; text-align: left; font-size: 12px; font-weight: 600; color: #374151;">Status</th>
                         <th style="padding: 12px 15px; text-align: left; font-size: 12px; font-weight: 600; color: #374151;">Data</th>
+                        @if(!($isPortaria ?? false))
                         <th style="padding: 12px 15px; text-align: center; font-size: 12px; font-weight: 600; color: #374151;">Ação</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -61,12 +76,17 @@
                                     @case('autorizado_professor')
                                         <span style="display: inline-block; background: #dcfce7; color: #166534; padding: 4px 8px; border-radius: 12px; font-size: 11px; font-weight: 600;">Autorizado</span>
                                         @break
+                                    @case('concluido_portaria')
+                                        <span style="display: inline-block; background: #d1fae5; color: #065f46; padding: 4px 8px; border-radius: 12px; font-size: 11px; font-weight: 600;">Concluído</span>
+                                        @break
                                 @endswitch
                             </td>
                             <td style="padding: 12px 15px; font-size: 13px; color: #1f2937;">{{ $autorizacao->created_at->format('d/m/Y H:i') }}</td>
+                            @if(!($isPortaria ?? false))
                             <td style="padding: 12px 15px; text-align: center;">
                                 <a href="{{ route('filament.admin.resources.autorizacaos.edit', $autorizacao) }}" style="font-size: 12px; color: #2563eb; text-decoration: none;">Editar</a>
                             </td>
+                            @endif
                         </tr>
                     @empty
                         <tr>

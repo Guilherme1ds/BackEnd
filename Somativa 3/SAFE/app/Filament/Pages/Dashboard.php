@@ -6,6 +6,7 @@ use App\Models\Autorizacao;
 use BackedEnum;
 use Filament\Pages\Page;
 use Filament\Support\Icons\Heroicon;
+use Illuminate\Support\Facades\Auth;
 
 class Dashboard extends Page
 {
@@ -24,15 +25,25 @@ class Dashboard extends Page
 
     protected function getViewData(): array
     {
+        /** @phpstan-ignore-next-line */
+        $isPortaria = Auth::user()->hasRole('portaria');
+
+        if ($isPortaria) {
+            $query = Autorizacao::whereIn('status', ['autorizado_professor', 'concluido_portaria']);
+        } else {
+            $query = Autorizacao::query();
+        }
+
         return [
-            'autorizacoesTotal' => Autorizacao::count(),
-            'autorizacoesPendentes' => Autorizacao::where('status', 'pendente')->count(),
-            'autorizacoesAutorizadas' => Autorizacao::where('status', 'autorizado_professor')->count(),
-            'autorizacoesRecusadas' => Autorizacao::where('status', 'recusado')->count(),
-            'autorizacoes' => Autorizacao::with(['aluno', 'turma'])
+            'autorizacoesTotal' => $isPortaria ? Autorizacao::whereIn('status', ['autorizado_professor', 'concluido_portaria'])->count() : Autorizacao::count(),
+            'autorizacoesPendentes' => $isPortaria ? 0 : Autorizacao::where('status', 'pendente')->count(),
+            'autorizacoesAutorizadas' => $query->where('status', 'autorizado_professor')->count(),
+            'autorizacoesRecusadas' => $isPortaria ? 0 : Autorizacao::where('status', 'recusado')->count(),
+            'autorizacoes' => $query->with(['aluno', 'turma'])
                 ->latest()
                 ->limit(10)
                 ->get(),
+            'isPortaria' => $isPortaria,
         ];
     }
 }
